@@ -1,4 +1,4 @@
-name: Проверить версию Diia
+name: Check Diia Version
 on:
   schedule:
     - cron: '*/10 * * * *'
@@ -9,23 +9,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Настройка Python
+      - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
-      - name: Запустить скрипт
+      - name: Run script
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          FRIEND_CHAT_ID: ${{ secrets.FRIEND_CHAT_ID }}
         run: |
           pip install requests
           python Check.py
-      - name: Сохранить версию
+      - name: Save version
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
           git add version.txt
           git commit -m "Update version" || exit 0
           git push
