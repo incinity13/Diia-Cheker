@@ -20,7 +20,7 @@ jobs:
           FRIEND_CHAT_ID: ${{ secrets.FRIEND_CHAT_ID }}
         run: |
           pip install requests
-          python Chek.py
+          python Check.py
       - name: Save Version
         run: |
           git config --global user.name 'Bot'
